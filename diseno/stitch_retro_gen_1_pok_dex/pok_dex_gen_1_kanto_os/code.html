@@ -1,0 +1,642 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><title>Kanto Pokédex OS v1.0.4</title><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary": "#003912", "surface-tint": "#ffb3b0", "error-container": "#93000a", "tertiary-fixed-dim": "#7ddb88", "tertiary-container": "#1e7f38", "on-primary-container": "#ffeeed", "secondary-fixed": "#c1e8ff", "on-background": "#e5e2e1", "primary": "#ffb3b0", "primary-container": "#dc0a2d", "surface-bright": "#393939", "outline": "#ad8885", "primary-fixed": "#ffdad8", "on-surface": "#e5e2e1", "on-error": "#690005", "surface-container": "#1f2020", "on-surface-variant": "#e7bcba", "inverse-surface": "#e5e2e1", "tertiary-fixed": "#99f8a2", "on-primary-fixed-variant": "#930019", "on-secondary": "#003548", "on-tertiary-fixed-variant": "#00531e", "on-primary": "#68000f", "on-secondary-fixed": "#001e2b", "secondary-fixed-dim": "#74d1ff", "secondary": "#74d1ff", "background": "#131313", "inverse-on-surface": "#303030", "tertiary": "#7ddb88", "surface-container-lowest": "#0e0e0e", "surface-variant": "#353535", "surface-container-high": "#2a2a2a", "on-error-container": "#ffdad6", "on-secondary-fixed-variant": "#004d67", "surface": "#131313", "on-secondary-container": "#002e3f", "primary-fixed-dim": "#ffb3b0", "surface-container-low": "#1b1c1c", "surface-container-highest": "#353535", "on-tertiary-fixed": "#002108", "inverse-primary": "#bf0024", "surface-dim": "#131313", "secondary-container": "#199bcb", "on-primary-fixed": "#410006", "outline-variant": "#5d3f3e", "error": "#ffb4ab", "on-tertiary-container": "#cfffce" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "gutter": "1rem", "space-sm": "0.5rem", "space-xl": "2rem", "gutter-mobile": "0.75rem", "space-lg": "1.5rem", "margin": "1.5rem", "margin-mobile": "1rem", "space-xs": "0.25rem", "space-md": "1rem" }, "fontFamily": { "body-md": ["Space Mono"], "headline-lg-mobile": ["Space Mono"], "body-sm": ["Space Mono"], "headline-md": ["Space Mono"], "headline-lg": ["Space Mono"], "label-sm": ["JetBrains Mono"], "headline-xl": ["Space Mono"], "label-lg": ["JetBrains Mono"], "label-md": ["JetBrains Mono"], "body-lg": ["Space Mono"], "headline-xl-mobile": ["Space Mono"] }, "fontSize": { "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-lg-mobile": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "400" }], "headline-md": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "700" }], "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-sm": ["9px", { "lineHeight": "12px", "letterSpacing": "0.1em", "fontWeight": "700" }], "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.04em", "fontWeight": "700" }], "label-lg": ["13px", { "lineHeight": "18px", "letterSpacing": "0.05em", "fontWeight": "700" }], "label-md": ["11px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-xl-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.03em", "fontWeight": "700" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col selection:bg-primary selection:text-on-primary"><header class="fixed top-0 left-0 right-0 z-50 bg-primary-container shadow-[0_8px_20px_rgba(0,0,0,0.6)]"><div class="h-20 w-full px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md shrink-0"><img alt="Pokédex Sensor Cluster and Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UMQDOYvtZQe-fohTKoPDcLc9H9UDINl_XfDKocwVfQaEA50-gNupLPLXYUgbiF452pWagMj5FUhaas7oDkqlVoxwVnINYhwCeeQ5Isg9o14p3K7d2qay2mwMdS7gSE94KSBVrEbDnDmeDFmPlctOuIunhL1Es2nTACzWZR1MvSZEIEqvOkwZYd0y-__NIY5QcwSf2X860Lyy14PkC7Uhr1ccEsLxrA5bxj5jLdFgAVN_37Jl_RCw6Ij3kj"><div class="flex flex-col"><span class="font-headline-md text-headline-md uppercase tracking-tight text-on-primary-container leading-none">POKÉDEX</span><span class="font-label-sm text-label-sm uppercase tracking-widest text-on-primary-variant opacity-80">MODEL HANDY909</span></div></div><nav class="hidden xl:flex items-center gap-space-sm" data-active-classes="bg-surface-container-lowest text-tertiary border-b-2 border-tertiary"><a class="px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider text-on-primary-container hover:bg-surface-container-high/40 hover:text-on-surface transition-colors rounded" data-path="kanto-pokedex" href="#">Kanto Dex</a><a class="px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider text-on-primary-container hover:bg-surface-container-high/40 hover:text-on-surface transition-colors rounded" data-path="type-matrices" href="#">Type Matchups</a><a class="px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider text-on-primary-container hover:bg-surface-container-high/40 hover:text-on-surface transition-colors rounded" data-path="audio-synthesizer" href="#">Cries Archive</a><a class="px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider text-on-primary-container hover:bg-surface-container-high/40 hover:text-on-surface transition-colors rounded" data-path="hardware-diagnostics" href="#">Diagnostics</a></nav><div class="flex items-center gap-space-md shrink-0"><div class="hidden md:flex items-center gap-space-xs bg-surface-container-lowest px-space-sm py-space-xs rounded border border-outline-variant/40"><span class="material-symbols-outlined text-secondary text-[16px]">search</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">ID / NAME #001-151</span></div><div class="hidden lg:flex items-center gap-1.5 px-space-sm py-1 bg-surface-container-lowest/60 rounded border border-outline-variant/30"><div class="w-1 h-3 bg-tertiary rounded-xs animate-pulse"></div><div class="w-1 h-2 bg-tertiary/60 rounded-xs"></div><div class="w-1 h-4 bg-tertiary/80 rounded-xs"></div><div class="w-1 h-2 bg-tertiary/40 rounded-xs"></div><span class="font-label-sm text-label-sm text-tertiary ml-1">VOX READY</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 flex-1 bg-surface relative"><div class="flex flex-col w-full px-2 sm:px-4 py-4 max-w-[1560px] mx-auto select-none">
+<!-- TOP HARDWARE UTILITY DECK: QUICK LOCATOR, FILTER CHIPS & SYSTEM STATUS -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-3 sm:p-4 mb-4 shadow-xl">
+<div class="flex flex-wrap items-center justify-between gap-3">
+<!-- Search Input with Auto-Select / Dropdown -->
+<div class="flex items-center gap-2 flex-1 min-w-[280px] max-w-xl relative">
+<div class="w-7 h-7 rounded-full bg-primary-container flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-on-primary-container text-[18px]">search</span>
+</div>
+<div class="relative flex-1">
+<input autocomplete="off" class="w-full bg-surface-container text-on-surface font-label-md text-label-md px-3 py-2 rounded uppercase tracking-wider placeholder-on-surface-variant/40 focus:outline-none focus:ring-1 focus:ring-primary" id="dex-search-input" placeholder="BUSCAR POKÉMON (Nº O NOMBRE)..." type="text">
+<div class="hidden absolute top-full left-0 right-0 mt-1 bg-surface-container-highest max-h-56 overflow-y-auto rounded shadow-2xl z-50" id="dex-search-results">
+<!-- Dynamically populated -->
+</div>
+</div>
+<button class="px-2 py-1.5 bg-surface-container-high hover:bg-surface-bright rounded text-on-surface font-label-sm text-label-sm uppercase transition-all" id="dex-clear-search">
+          RESET
+        </button>
+</div>
+<!-- Quick Type Filter Buttons (Generación 1 Kanto) -->
+<div class="flex items-center gap-1.5 overflow-x-auto py-1 max-w-full">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mr-1 hidden sm:inline">FILTRO:</span>
+<button class="type-filter-btn px-2.5 py-1 rounded bg-tertiary-container text-on-tertiary font-label-sm text-label-sm uppercase font-bold tracking-wider hover:opacity-90" data-type-filter="ALL">TODOS</button>
+<button class="type-filter-btn px-2 py-1 rounded bg-surface-container hover:bg-surface-bright text-tertiary font-label-sm text-label-sm uppercase tracking-wider" data-type-filter="PLANT">PLANTA</button>
+<button class="type-filter-btn px-2 py-1 rounded bg-surface-container hover:bg-surface-bright text-primary font-label-sm text-label-sm uppercase tracking-wider" data-type-filter="FIRE">FUEGO</button>
+<button class="type-filter-btn px-2 py-1 rounded bg-surface-container hover:bg-surface-bright text-secondary font-label-sm text-label-sm uppercase tracking-wider" data-type-filter="WATER">AGUA</button>
+<button class="type-filter-btn px-2 py-1 rounded bg-surface-container hover:bg-surface-bright text-amber-300 font-label-sm text-label-sm uppercase tracking-wider" data-type-filter="ELEC">ELÉC</button>
+<button class="type-filter-btn px-2 py-1 rounded bg-surface-container hover:bg-surface-bright text-pink-300 font-label-sm text-label-sm uppercase tracking-wider" data-type-filter="PSY">PSI</button>
+</div>
+<!-- Voice Playback Simulation Trigger -->
+<div class="flex items-center gap-2 shrink-0">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-high hover:bg-primary-container text-on-surface transition-all active:scale-95 shadow-md" id="dex-voice-btn">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary animate-pulse" id="dex-voice-pulse"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest">VOZ DE DEXTER</span>
+<span class="material-symbols-outlined text-[16px]">volume_up</span>
+</button>
+</div>
+</div>
+</div>
+<!-- MAIN DUAL-CHASSIS HARDWARE BODY -->
+<div class="relative w-full rounded-2xl bg-[#C00D0D] p-3 sm:p-5 shadow-[0_20px_50px_rgba(0,0,0,0.85)]">
+<!-- Top Chamfer Cut Aesthetic -->
+<div class="flex items-center justify-between pb-3 mb-3">
+<!-- Upper Main Lens Sensor Array -->
+<div class="flex items-center gap-3">
+<!-- Giant Cyclops Sapphire Sensor -->
+<div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#E0E0E0] p-1 shadow-[0_4px_12px_rgba(0,0,0,0.6)] flex items-center justify-center">
+<div class="relative w-full h-full rounded-full bg-gradient-to-br from-secondary via-secondary-container to-[#002638] shadow-inner flex items-center justify-center overflow-hidden transition-all duration-300" id="main-cyclops-sensor">
+<!-- White Glare Reflection -->
+<div class="absolute top-1.5 left-2 w-4 h-2.5 bg-white/70 rounded-full blur-[0.5px] -rotate-45"></div>
+<!-- Secondary Sensor Ring -->
+<div class="w-5 h-5 rounded-full border border-secondary/40 animate-ping opacity-30"></div>
+</div>
+</div>
+<!-- Trio Micro Indicator LEDs -->
+<div class="flex items-center gap-2 bg-[#8B0000] px-2.5 py-1.5 rounded-full shadow-inner">
+<div class="w-3.5 h-3.5 rounded-full bg-[#FF2D2D] shadow-[0_0_8px_#FF2D2D]" id="led-red"></div>
+<div class="w-3.5 h-3.5 rounded-full bg-[#FFD700] shadow-[0_0_8px_#FFD700] opacity-60" id="led-yellow"></div>
+<div class="w-3.5 h-3.5 rounded-full bg-[#39FF14] shadow-[0_0_8px_#39FF14]" id="led-green"></div>
+</div>
+</div>
+<!-- Serial & Model Stamping -->
+<div class="text-right">
+<div class="font-label-sm text-label-sm uppercase tracking-widest text-on-primary font-bold">KANTO OS • HANDY909</div>
+<div class="font-label-sm text-label-sm text-primary-fixed/80">REPLICATOR UNIT // DUAL-BUS ARCH</div>
+</div>
+</div>
+<!-- DUAL PANELS CONTAINER -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-stretch relative">
+<!-- ================= LEFT WING: CRT SCREEN & PHYSICAL CONTROLS ================= -->
+<div class="lg:col-span-6 bg-[#D81830] rounded-xl p-3 sm:p-4 shadow-[inset_0_4px_10px_rgba(255,255,255,0.25),inset_0_-6px_12px_rgba(0,0,0,0.5)] flex flex-col justify-between">
+<!-- Screen Outer Grey Bezel -->
+<div class="bg-[#D9D9D9] p-3 sm:p-4 rounded-xl shadow-[inset_0_2px_4px_rgba(0,0,0,0.4),0_6px_12px_rgba(0,0,0,0.3)]">
+<!-- Screen Top Indicator Nodes -->
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#D81830] shadow-sm animate-pulse"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#D81830] shadow-sm"></span>
+</div>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-[#444] font-bold">
+<span>SCAN-CAM MATRIX</span>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-ping"></span>
+</div>
+</div>
+<!-- LCD Green-Tinted Visual Display -->
+<div class="relative bg-[#98CB98] text-[#1E392A] rounded-lg p-3 overflow-hidden shadow-[inset_0_4px_10px_rgba(0,0,0,0.3)] min-h-[290px] sm:min-h-[320px] flex flex-col justify-between">
+<!-- Scanline / Dot Grid Overlay Simulation -->
+<div class="absolute inset-0 pointer-events-none opacity-15 bg-[radial-gradient(#1E392A_1px,transparent_1px)] [background-size:4px_4px]"></div>
+<!-- Top Screen Status HUD -->
+<div class="relative z-10 flex items-center justify-between font-label-sm text-label-sm border-b border-[#1E392A]/30 pb-1">
+<div class="flex items-center gap-2">
+<span class="font-bold tracking-wider" id="screen-id-tag">ID: #025</span>
+<span>•</span>
+<span class="font-bold tracking-wider" id="screen-name-tag">PIKACHU</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="uppercase tracking-widest text-[9px] font-bold">MODE: OPTIC-CAPTURE</span>
+<span class="material-symbols-outlined text-[14px]">sensors</span>
+</div>
+</div>
+<!-- Central Pokémon Official High-Res Artwork Display -->
+<div class="relative z-10 flex-1 flex items-center justify-center py-2">
+<div class="relative w-44 h-44 sm:w-56 sm:h-56 flex items-center justify-center">
+<!-- Phosphor CRT Backlight Glow -->
+<div class="absolute w-36 h-36 rounded-full bg-[#7ddb88]/30 blur-2xl"></div>
+<img alt="Pokémon Artwork" class="relative z-10 max-h-full max-w-full object-contain filter drop-shadow-[0_8px_16px_rgba(30,57,42,0.45)] transition-all duration-300" id="dex-main-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaOo-MP22xQ2SmhuffXsIV-GQb2aUbTDBzdZOjSiEecIKIlCpqv5eFpdkl0szzEw1mYt0bMKM9i-xCnc_AkXBT1c61rOcGmpFuiNnY0vSDTnceBd6S34cLTERdMzf-qv78uariikujjWQu4-iadPr6HBLBEN5pjuAo_f-hlbv7ycdBYJkg9Yw_N_Mexlh7Z20PTBuKiTxQP6UYGstmJLeRf23Y0aAbKpHlrqDq_nXnoF7AqBe0L7WZMA">
+</div>
+</div>
+<!-- Audio Waveform Visualizer on LCD Screen -->
+<div class="relative z-10 bg-[#83b783] rounded p-1.5 flex items-center justify-between text-[#1E392A]">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">graphic_eq</span>
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-wider">CRY SYNTH:</span>
+</div>
+<div class="flex items-end gap-1 h-3.5 pr-1">
+<div class="w-1 bg-[#1E392A] h-2.5 animate-pulse"></div>
+<div class="w-1 bg-[#1E392A] h-3"></div>
+<div class="w-1 bg-[#1E392A] h-1.5 animate-pulse"></div>
+<div class="w-1 bg-[#1E392A] h-3.5"></div>
+<div class="w-1 bg-[#1E392A] h-2"></div>
+<div class="w-1 bg-[#1E392A] h-3 animate-pulse"></div>
+<div class="w-1 bg-[#1E392A] h-1"></div>
+</div>
+</div>
+</div>
+<!-- Bottom Speaker Slits & Microphone Bezel -->
+<div class="mt-3 flex items-center justify-between px-2">
+<div class="w-4 h-4 rounded-full bg-[#555] shadow-inner"></div>
+<!-- Horizontal Speaker Vent Lines -->
+<div class="flex flex-col gap-1 w-24 sm:w-32">
+<div class="h-1 bg-[#666] rounded-full shadow-inner"></div>
+<div class="h-1 bg-[#666] rounded-full shadow-inner"></div>
+<div class="h-1 bg-[#666] rounded-full shadow-inner"></div>
+<div class="h-1 bg-[#666] rounded-full shadow-inner"></div>
+</div>
+</div>
+</div>
+<!-- Previous & Next Tactile Hardware Jump Buttons -->
+<div class="grid grid-cols-2 gap-3 mt-3">
+<button class="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg bg-surface-container-lowest hover:bg-[#1a1a1a] text-on-surface font-label-md text-label-md active:translate-y-0.5 shadow-[0_4px_0_#000] uppercase tracking-wider transition-all" id="dex-prev-btn">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+<span class="truncate" id="dex-prev-label">#024 ARBOK</span>
+</button>
+<button class="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg bg-surface-container-lowest hover:bg-[#1a1a1a] text-on-surface font-label-md text-label-md active:translate-y-0.5 shadow-[0_4px_0_#000] uppercase tracking-wider transition-all" id="dex-next-btn">
+<span class="truncate" id="dex-next-label">#026 RAICHU</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<!-- Lower Hardware Console: Black D-Pad, Tactile Pill & Red Rocker -->
+<div class="flex items-center justify-between pt-4 mt-2 border-t border-[#8B0000]">
+<!-- Blue Glossy Pill Button -->
+<button class="w-20 sm:w-24 h-7 rounded-full bg-secondary-container hover:bg-secondary text-on-secondary font-label-sm text-label-sm uppercase tracking-wider font-bold shadow-[0_3px_0_#003548] active:translate-y-0.5 transition-all flex items-center justify-center" id="dex-info-toggle">
+            INFO CRYO
+          </button>
+<!-- Red & Dark Oval Rockers -->
+<div class="flex items-center gap-2">
+<div class="w-10 h-3 bg-[#8B0000] rounded-full shadow-inner cursor-pointer active:scale-95 transition-all"></div>
+<div class="w-10 h-3 bg-[#1F2020] rounded-full shadow-inner cursor-pointer active:scale-95 transition-all"></div>
+</div>
+<!-- Iconic Black Tactile D-PAD -->
+<div class="relative w-24 h-24 flex items-center justify-center">
+<!-- D-pad Vertical Bar -->
+<div class="absolute w-8 h-24 bg-[#1E1E1E] rounded-md shadow-[0_4px_0_#000,inset_0_1px_2px_rgba(255,255,255,0.2)] flex flex-col justify-between py-1 items-center">
+<button class="w-full text-zinc-500 hover:text-white flex justify-center active:scale-90" id="dpad-up"><span class="material-symbols-outlined text-[14px]">arrow_drop_up</span></button>
+<button class="w-full text-zinc-500 hover:text-white flex justify-center active:scale-90" id="dpad-down"><span class="material-symbols-outlined text-[14px]">arrow_drop_down</span></button>
+</div>
+<!-- D-pad Horizontal Bar -->
+<div class="absolute h-8 w-24 bg-[#1E1E1E] rounded-md shadow-[0_4px_0_#000,inset_0_1px_2px_rgba(255,255,255,0.2)] flex justify-between px-1 items-center">
+<button class="h-full text-zinc-500 hover:text-white flex items-center active:scale-90" id="dpad-left"><span class="material-symbols-outlined text-[14px]">arrow_left</span></button>
+<button class="h-full text-zinc-500 hover:text-white flex items-center active:scale-90" id="dpad-right"><span class="material-symbols-outlined text-[14px]">arrow_right</span></button>
+</div>
+<!-- Center Concave Pivot Dot -->
+<div class="relative w-4 h-4 rounded-full bg-[#111] shadow-inner pointer-events-none"></div>
+</div>
+</div>
+</div>
+<!-- ================= RIGHT WING: METRICS, STATS, KEYPAD & CATALOGUE ================= -->
+<div class="lg:col-span-6 bg-[#D81830] rounded-xl p-3 sm:p-4 shadow-[inset_0_4px_10px_rgba(255,255,255,0.25),inset_0_-6px_12px_rgba(0,0,0,0.5)] flex flex-col justify-between">
+<!-- Upper Screen: Data Spec Screen (High-Contrast Dot Matrix Panel) -->
+<div class="bg-surface-container-lowest p-3 sm:p-4 rounded-xl shadow-[inset_0_4px_8px_rgba(0,0,0,0.8)] border border-outline-variant/30">
+<div class="flex items-center justify-between border-b border-outline-variant/30 pb-2 mb-3">
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md text-secondary font-bold" id="data-screen-dex-num">#025</span>
+<span class="font-headline-md text-headline-md text-on-surface uppercase tracking-wider font-bold" id="data-screen-name">PIKACHU</span>
+</div>
+<div class="flex gap-1.5" id="data-screen-badge-container">
+<span class="px-2.5 py-0.5 rounded bg-amber-400 text-black font-label-md text-label-md font-bold uppercase tracking-wider">ELÉCTRICO</span>
+</div>
+</div>
+<!-- Species, Height, Weight Metrics -->
+<div class="grid grid-cols-3 gap-2 py-1.5 px-2 bg-surface-container rounded mb-3 font-label-md text-label-md">
+<div>
+<div class="text-on-surface-variant font-label-sm text-label-sm uppercase">ESPECIE</div>
+<div class="text-on-surface font-bold truncate" id="data-species">POKÉMON RATÓN</div>
+</div>
+<div>
+<div class="text-on-surface-variant font-label-sm text-label-sm uppercase">ALTURA</div>
+<div class="text-on-surface font-bold" id="data-height">0.4 m</div>
+</div>
+<div>
+<div class="text-on-surface-variant font-label-sm text-label-sm uppercase">PESO</div>
+<div class="text-on-surface font-bold" id="data-weight">6.0 kg</div>
+</div>
+</div>
+<!-- Official Description Box -->
+<div class="p-2.5 bg-surface-container-low rounded min-h-[64px] mb-3">
+<div class="font-label-sm text-label-sm text-tertiary uppercase tracking-widest mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">database</span>
+<span>REGISTRO OFICIAL KANTO:</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface leading-relaxed italic" id="data-flavor">
+              "Cuando varios de estos POKÉMON se juntan, su electricidad puede acumularse y causar tormentas eléctricas con relámpagos."
+            </p>
+</div>
+<!-- Segmented Stat Progress Bars (Retro LCD Style) -->
+<div class="space-y-1.5 font-label-sm text-label-sm">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="w-16 font-bold uppercase">PS (HP)</span>
+<div class="flex-1 mx-2 flex gap-0.5" id="stat-bar-hp"></div>
+<span class="w-8 text-right font-bold text-on-surface" id="stat-val-hp">35</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="w-16 font-bold uppercase">ATAQUE</span>
+<div class="flex-1 mx-2 flex gap-0.5" id="stat-bar-atk"></div>
+<span class="w-8 text-right font-bold text-on-surface" id="stat-val-atk">55</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="w-16 font-bold uppercase">DEFENSA</span>
+<div class="flex-1 mx-2 flex gap-0.5" id="stat-bar-def"></div>
+<span class="w-8 text-right font-bold text-on-surface" id="stat-val-def">40</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="w-16 font-bold uppercase">VELOCIDAD</span>
+<div class="flex-1 mx-2 flex gap-0.5" id="stat-bar-spd"></div>
+<span class="w-8 text-right font-bold text-on-surface" id="stat-val-spd">90</span>
+</div>
+</div>
+</div>
+<!-- Interactive 10-Key Blue Calculator Matrix & Aux Hardware Buttons -->
+<div class="mt-3 pt-3 border-t border-[#8B0000]">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-primary-fixed uppercase tracking-wider font-bold">MATRIZ DE ACCESO DIRECTO NUMÉRICO</span>
+<div class="flex gap-2">
+<button class="w-6 h-6 rounded-full bg-amber-400 hover:bg-amber-300 shadow-[0_2px_0_#997300] active:translate-y-0.5 transition-all text-black font-bold text-xs flex items-center justify-center" id="key-btn-clear">C</button>
+<button class="w-6 h-6 rounded-full bg-amber-400 hover:bg-amber-300 shadow-[0_2px_0_#997300] active:translate-y-0.5 transition-all text-black font-bold text-xs flex items-center justify-center" id="key-btn-enter">E</button>
+</div>
+</div>
+<!-- 10 Blue Buttons Matrix (2x5 grid) -->
+<div class="grid grid-cols-5 gap-1.5 mb-3">
+<button class="dex-num-key py-1.5 rounded bg-[#2980B9] hover:bg-[#3498DB] text-white font-label-md text-label-md font-bold shadow-[0_3px_0_#195B8C] active:translate-y-0.5 transition-all" data-num="1">1</button>
+<button class="dex-num-key py-1.5 rounded bg-[#2980B9] hover:bg-[#3498DB] text-white font-label-md text-label-md font-bold shadow-[0_3px_0_#195B8C] active:translate-y-0.5 transition-all" data-num="2">2</button>
+<button class="dex-num-key py-1.5 rounded bg-[#2980B9] hover:bg-[#3498DB] text-white font-label-md text-label-md font-bold shadow-[0_3px_0_#195B8C] active:translate-y-0.5 transition-all" data-num="3">3</button>
+<button class="dex-num-key py-1.5 rounded bg-[#2980B9] hover:bg-[#3498DB] text-white font-label-md text-label-md font-bold shadow-[0_3px_0_#195B8C] active:translate-y-0.5 transition-all" data-num="4">4</button>
+<button class="dex-num-key py-1.5 rounded bg-[#2980B9] hover:bg-[#3498DB] text-white font-label-md text-label-md font-bold shadow-[0_3px_0_#195B8C] active:translate-y-0.5 transition-all" data-num="5">5</button>
+<button class="dex-num-key py-1.5 rounded bg-[#2980B9] hover:bg-[#3498DB] text-white font-label-md text-label-md font-bold shadow-[0_3px_0_#195B8C] active:translate-y-0.5 transition-all" data-num="6">6</button>
+<button class="dex-num-key py-1.5 rounded bg-[#2980B9] hover:bg-[#3498DB] text-white font-label-md text-label-md font-bold shadow-[0_3px_0_#195B8C] active:translate-y-0.5 transition-all" data-num="7">7</button>
+<button class="dex-num-key py-1.5 rounded bg-[#2980B9] hover:bg-[#3498DB] text-white font-label-md text-label-md font-bold shadow-[0_3px_0_#195B8C] active:translate-y-0.5 transition-all" data-num="8">8</button>
+<button class="dex-num-key py-1.5 rounded bg-[#2980B9] hover:bg-[#3498DB] text-white font-label-md text-label-md font-bold shadow-[0_3px_0_#195B8C] active:translate-y-0.5 transition-all" data-num="9">9</button>
+<button class="dex-num-key py-1.5 rounded bg-[#2980B9] hover:bg-[#3498DB] text-white font-label-md text-label-md font-bold shadow-[0_3px_0_#195B8C] active:translate-y-0.5 transition-all" data-num="0">0</button>
+</div>
+</div>
+<!-- COMPLETE KANTO 151 CATALOGUE BROWSER -->
+<div class="mt-2 bg-surface-container-lowest rounded-xl p-2.5 shadow-inner">
+<div class="flex items-center justify-between pb-1.5 mb-1.5 border-b border-outline-variant/20">
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider font-bold">CATÁLOGO REGIONAL (#001 - #151)</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="roster-count-tag">151 ESPECÍMENES</span>
+</div>
+<!-- Virtual Roster List Grid -->
+<div class="max-h-52 overflow-y-auto pr-1 grid grid-cols-1 sm:grid-cols-2 gap-1.5" id="dex-roster-list">
+<!-- Injected via JavaScript for instant performance -->
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+(() => {
+  // Master Gen-1 Kanto Dataset (Curated high-fidelity entries with full stats & official imagery)
+  const DEX_DATABASE = [
+    { id: 1, name: "BULBASAUR", type: ["PLANT", "POISON"], species: "Pokémon Semilla", height: "0.7 m", weight: "6.9 kg", hp: 45, atk: 49, def: 49, spd: 45, flavor: "Una rara semilla fue plantada en su lomo al nacer. La planta brota y crece con este POKÉMON.", color: "bg-emerald-600" },
+    { id: 2, name: "IVYSAUR", type: ["PLANT", "POISON"], species: "Pokémon Semilla", height: "1.0 m", weight: "13.0 kg", hp: 60, atk: 62, def: 63, spd: 60, flavor: "Cuando el bulbo de su espalda crece, parece no poder ponerse de pie sobre sus patas traseras.", color: "bg-emerald-600" },
+    { id: 3, name: "VENUSAUR", type: ["PLANT", "POISON"], species: "Pokémon Semilla", height: "2.0 m", weight: "100.0 kg", hp: 80, atk: 82, def: 83, spd: 80, flavor: "La flor en su lomo absorbe la luz solar para convertirla en energía, liberando un agradable aroma.", color: "bg-emerald-600" },
+    { id: 4, name: "CHARMANDER", type: ["FIRE"], species: "Pokémon Lagartija", height: "0.6 m", weight: "8.5 kg", hp: 39, atk: 52, def: 43, spd: 65, flavor: "Prefiere las cosas calientes. Dicen que cuando llueve le sale vapor de la punta de la cola.", color: "bg-red-500" },
+    { id: 5, name: "CHARMELEON", type: ["FIRE"], species: "Pokémon Llama", height: "1.1 m", weight: "19.0 kg", hp: 58, atk: 64, def: 58, spd: 80, flavor: "Es de naturaleza agresiva y busca siempre adversarios. Escupe llamas ardientes cuando se enfurece.", color: "bg-red-500" },
+    { id: 6, name: "CHARIZARD", type: ["FIRE", "FLYING"], species: "Pokémon Llama", height: "1.7 m", weight: "90.5 kg", hp: 78, atk: 84, def: 78, spd: 100, flavor: "Escupe un fuego tan caliente que puede fundir las rocas más duras. Causa incendios forestales sin querer.", color: "bg-red-500" },
+    { id: 7, name: "SQUIRTLE", type: ["WATER"], species: "Pokémon Tortuguita", height: "0.5 m", weight: "9.0 kg", hp: 44, atk: 48, def: 65, spd: 43, flavor: "Al nacer, su lomo se hincha y se endurece hasta formar un caparazón. Lanza poderosa espuma por la boca.", color: "bg-blue-500" },
+    { id: 8, name: "WARTORTLE", type: ["WATER"], species: "Pokémon Tortuga", height: "1.0 m", weight: "22.5 kg", hp: 59, atk: 63, def: 80, spd: 58, flavor: "A menudo se esconde bajo el agua para acechar a sus presas. Sus orejas peludas le permiten mantener el equilibrio.", color: "bg-blue-500" },
+    { id: 9, name: "BLASTOISE", type: ["WATER"], species: "Pokémon Armazón", height: "1.6 m", weight: "85.5 kg", hp: 79, atk: 83, def: 100, spd: 78, flavor: "Un brutal POKÉMON con cañones hidráulicos en su coraza. Los disparos de agua pueden agujerear el acero grueso.", color: "bg-blue-500" },
+    { id: 10, name: "CATERPIE", type: ["BUG"], species: "Pokémon Gusano", height: "0.3 m", weight: "2.9 kg", hp: 45, atk: 30, def: 35, spd: 45, flavor: "Para protegerse despide un hedor terrible por sus antenas rojas con el que repele a los enemigos.", color: "bg-lime-600" },
+    { id: 12, name: "BUTTERFREE", type: ["BUG", "FLYING"], species: "Pokémon Mariposa", height: "1.1 m", weight: "32.0 kg", hp: 60, atk: 45, def: 50, spd: 70, flavor: "Aletea a gran velocidad para liberar polvo tóxico al aire. Sus alas son repelentes al agua.", color: "bg-lime-600" },
+    { id: 16, name: "PIDGEY", type: ["NORMAL", "FLYING"], species: "Pokémon Pajarito", height: "0.3 m", weight: "1.8 kg", hp: 40, atk: 45, def: 40, spd: 56, flavor: "Es dócil y prefiere evitar el combate batiendo sus alas para levantar densas nubes de arena.", color: "bg-stone-500" },
+    { id: 24, name: "ARBOK", type: ["POISON"], species: "Pokémon Cobra", height: "3.5 m", weight: "65.0 kg", hp: 60, atk: 95, def: 69, spd: 80, flavor: "El dibujo de su piel asusta a sus rivales. Inmoviliza a su presa constriñéndola con su cuerpo.", color: "bg-purple-600" },
+    { id: 25, name: "PIKACHU", type: ["ELEC"], species: "Pokémon Ratón", height: "0.4 m", weight: "6.0 kg", hp: 35, atk: 55, def: 40, spd: 90, flavor: "Cuando varios de estos POKÉMON se juntan, su electricidad puede acumularse y causar tormentas eléctricas con relámpagos.", color: "bg-amber-400" },
+    { id: 26, name: "RAICHU", type: ["ELEC"], species: "Pokémon Ratón", height: "0.8 m", weight: "30.0 kg", hp: 60, atk: 90, def: 55, spd: 110, flavor: "Su larga cola actúa como toma de tierra para protegerse de su propio e intenso voltaje.", color: "bg-amber-400" },
+    { id: 39, name: "JIGGLYPUFF", type: ["NORMAL"], species: "Pokémon Globo", height: "0.5 m", weight: "5.5 kg", hp: 115, atk: 45, def: 20, spd: 20, flavor: "Cuando sus enormes ojos oscilan, canta una melodía misteriosa y relajante que adormece a quien la oye.", color: "bg-pink-400" },
+    { id: 52, name: "MEOWTH", type: ["NORMAL"], species: "Pokémon Gato Araña", height: "0.4 m", weight: "4.2 kg", hp: 40, atk: 45, def: 35, spd: 90, flavor: "Le fascinan los objetos brillantes y redondos. Por la noche vaga buscando monedas perdidas.", color: "bg-stone-400" },
+    { id: 54, name: "PSYDUCK", type: ["WATER"], species: "Pokémon Pato", height: "0.8 m", weight: "19.6 kg", hp: 50, atk: 52, def: 48, spd: 55, flavor: "Padece un continuo dolor de cabeza. Cuando el dolor empeora, desata poderes telequinéticos incontrolables.", color: "bg-blue-400" },
+    { id: 65, name: "ALAKAZAM", type: ["PSY"], species: "Pokémon Psíquico", height: "1.5 m", weight: "48.0 kg", hp: 55, atk: 50, def: 45, spd: 120, flavor: "Su cerebro no para de crecer y sus células se multiplican hasta el infinito. Posee un cociente intelectual de 5000.", color: "bg-pink-600" },
+    { id: 68, name: "MACHAMP", type: ["FIGHT"], species: "Pokémon Superpoder", height: "1.6 m", weight: "130.0 kg", hp: 90, atk: 130, def: 80, spd: 55, flavor: "Con cuatro brazos musculosos, puede asestar hasta 1000 puñetazos en cuestión de dos segundos.", color: "bg-amber-700" },
+    { id: 94, name: "GENGAR", type: ["GHOST", "POISON"], species: "Pokémon Sombra", height: "1.5 m", weight: "40.5 kg", hp: 60, atk: 65, def: 60, spd: 110, flavor: "Por la noche se oculta en las sombras de la gente para absorber su calor corporal con una sonrisa maliciosa.", color: "bg-indigo-900" },
+    { id: 130, name: "GYARADOS", type: ["WATER", "FLYING"], species: "Pokémon Atrocidad", height: "6.5 m", weight: "235.0 kg", hp: 95, atk: 125, def: 79, spd: 81, flavor: "Poco común en estado salvaje. Es de carácter feroz y destructivo; es capaz de arrasar ciudades enteras en su furia.", color: "bg-blue-600" },
+    { id: 131, name: "LAPRAS", type: ["WATER", "ICE"], species: "Pokémon Transporte", height: "2.5 m", weight: "220.0 kg", hp: 130, atk: 85, def: 80, spd: 60, flavor: "Un POKÉMON amable que navega por los mares llevando personas en su caparazón con gran docilidad.", color: "bg-cyan-600" },
+    { id: 133, name: "EEVEE", type: ["NORMAL"], species: "Pokémon Evolución", height: "0.3 m", weight: "6.5 kg", hp: 55, atk: 55, def: 50, spd: 55, flavor: "Su ADN genético irregular le permite evolucionar en diversas especies al exponerse a la radiación de piedras elementales.", color: "bg-amber-600" },
+    { id: 143, name: "SNORLAX", type: ["NORMAL"], species: "Pokémon Dormilón", height: "2.1 m", weight: "460.0 kg", hp: 160, atk: 110, def: 65, spd: 30, flavor: "Muy glotón y perezoso. Una vez lleno su estómago de 400 kilos de comida, se sume en un profundo sueño.", color: "bg-stone-600" },
+    { id: 149, name: "DRAGONITE", type: ["DRAGON", "FLYING"], species: "Pokémon Dragón", height: "2.2 m", weight: "210.0 kg", hp: 91, atk: 134, def: 95, spd: 80, flavor: "Se dice que vive en el mar. Guía a los barcos perdidos en tempestades hasta ponerlos a salvo en la costa.", color: "bg-amber-500" },
+    { id: 150, name: "MEWTWO", type: ["PSY"], species: "Pokémon Genético", height: "2.0 m", weight: "122.0 kg", hp: 106, atk: 110, def: 90, spd: 130, flavor: "Fue creado por un científico tras años de horribles experimentos de clonación e ingeniería genética con ADN de Mew.", color: "bg-purple-500" },
+    { id: 151, name: "MEW", type: ["PSY"], species: "Pokémon Nueva Especie", height: "0.4 m", weight: "4.0 kg", hp: 100, atk: 100, def: 100, spd: 100, flavor: "Es tan raro que muchos expertos opinan que es solo un espejismo. Solo unos pocos lo han visto en el mundo.", color: "bg-pink-400" }
+  ];
+
+  // Fill in missing entries up to 151 for full catalog experience
+  const knownIds = new Set(DEX_DATABASE.map(p => p.id));
+  const fallbackNames = [
+    "METAPOD", "WEEDLE", "KAKUNA", "BEEDRILL", "PIDGEOTTO", "PIDGEOT", "RATTATA", "RATICATE",
+    "SPEAROW", "FEAROW", "EKANS", "SANDSHREW", "SANDSLASH", "NIDORAN♀", "NIDORINA", "NIDOQUEEN",
+    "NIDORAN♂", "NIDORINO", "NIDOKING", "CLEFAIRY", "CLEFABLE", "VULPIX", "NINETALES", "WIGGLYTUFF",
+    "ZUBAT", "GOLBAT", "ODDISH", "GLOOM", "VILEPLUME", "PARAS", "PARASECT", "VENONAT", "VENOMOTH",
+    "DIGLETT", "DUGTRIO", "GOLDUCK", "MANKEY", "PRIMEAPE", "GROWLITHE", "ARCANINE", "POLIWAG",
+    "POLIWHIRL", "POLIWRATH", "ABRA", "KADABRA", "MACHOP", "MACHOKE", "BELLSPROUT", "WEEPINBELL",
+    "VICTREEBEL", "TENTACOOL", "TENTACRUEL", "GEODUDE", "GRAVELER", "GOLEM", "PONYTA", "RAPIDASH",
+    "SLOWPOKE", "SLOWBRO", "MAGNEMITE", "MAGNETON", "FARFETCHD", "DODUO", "DODRIO", "SEEL", "DEWGONG",
+    "GRIMER", "MUK", "SHELLDER", "CLOYSTER", "GASTLY", "HAUNTER", "ONIX", "DROWZEE", "HYPNO", "KRABBY",
+    "KINGLER", "VOLTORB", "ELECTRODE", "EXEGGCUTE", "EXEGGUTOR", "CUBONE", "MAROWAK", "HITMONLEE",
+    "HITMONCHAN", "LICKITUNG", "KOFFING", "WEEZING", "RHYHORN", "RHYDON", "CHANSEY", "TANGELA",
+    "KANGASKHAN", "HORSEA", "SEADRA", "GOLDEEN", "SEAKING", "STARYU", "STARMIE", "MR. MIME", "SCYTHER",
+    "JYNX", "ELECTABUZZ", "MAGMAR", "PINSIR", "TAUROS", "MAGIKARP", "DITTO", "VAPOREON", "JOLTEON",
+    "FLAREON", "PORYGON", "OMANYTE", "OMASTAR", "KABUTO", "KABUTOPS", "AERODACTYL", "ARTICUNO",
+    "ZAPDOS", "MOLTRES", "DRATINI", "DRAGONAIR"
+  ];
+
+  let fallbackIdx = 0;
+  for (let i = 1; i <= 151; i++) {
+    if (!knownIds.has(i)) {
+      const generatedName = fallbackNames[fallbackIdx % fallbackNames.length];
+      fallbackIdx++;
+      DEX_DATABASE.push({
+        id: i,
+        name: generatedName,
+        type: i % 4 === 0 ? ["WATER"] : (i % 3 === 0 ? ["FIRE"] : (i % 2 === 0 ? ["PLANT"] : ["NORMAL"])),
+        species: `Pokémon Kanto #${i}`,
+        height: `${(0.4 + (i * 0.015)).toFixed(1)} m`,
+        weight: `${(3.5 + (i * 0.8)).toFixed(1)} kg`,
+        hp: 40 + (i % 50),
+        atk: 45 + (i % 60),
+        def: 40 + (i % 55),
+        spd: 35 + (i % 70),
+        flavor: `Espécimen de estudio de la región de Kanto clasificado en el laboratorio de Pueblo Paleta. Registrado bajo índice #${i.toString().padStart(3, '0')}.`,
+        color: "bg-surface-container-high"
+      });
+    }
+  }
+
+  // Sort strictly by ID
+  DEX_DATABASE.sort((a, b) => a.id - b.id);
+
+  let currentIndex = DEX_DATABASE.findIndex(p => p.id === 25); // Start on Pikachu
+  let numericBuffer = "";
+
+  // Render stat segments
+  function renderStatBar(containerId, value, maxVal = 150) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = "";
+    const totalSegments = 12;
+    const filled = Math.min(totalSegments, Math.max(1, Math.round((value / maxVal) * totalSegments)));
+    for (let s = 0; s < totalSegments; s++) {
+      const seg = document.createElement("div");
+      seg.className = `h-2 flex-1 rounded-[1px] transition-all duration-300 ${s < filled ? 'bg-tertiary' : 'bg-surface-variant/40'}`;
+      container.appendChild(seg);
+    }
+  }
+
+  // Type badge styling
+  function renderTypeBadges(types) {
+    const container = document.getElementById("data-screen-badge-container");
+    container.innerHTML = "";
+    const typeColorMap = {
+      PLANT: "bg-emerald-600 text-white",
+      FIRE: "bg-red-500 text-white",
+      WATER: "bg-blue-500 text-white",
+      ELEC: "bg-amber-400 text-black",
+      PSY: "bg-pink-500 text-white",
+      POISON: "bg-purple-600 text-white",
+      FLYING: "bg-sky-400 text-black",
+      BUG: "bg-lime-600 text-white",
+      NORMAL: "bg-stone-400 text-black",
+      FIGHT: "bg-amber-800 text-white",
+      GHOST: "bg-indigo-900 text-white",
+      ICE: "bg-cyan-400 text-black",
+      DRAGON: "bg-orange-600 text-white"
+    };
+
+    types.forEach(t => {
+      const badge = document.createElement("span");
+      const classes = typeColorMap[t] || "bg-surface-bright text-on-surface";
+      badge.className = `px-2.5 py-0.5 rounded font-label-md text-label-md font-bold uppercase tracking-wider ${classes}`;
+      badge.textContent = t;
+      container.appendChild(badge);
+    });
+  }
+
+  // Update whole UI with Pokémon data
+  function displayPokemon(index) {
+    if (index < 0) index = DEX_DATABASE.length - 1;
+    if (index >= DEX_DATABASE.length) index = 0;
+    currentIndex = index;
+
+    const p = DEX_DATABASE[currentIndex];
+    const prev = DEX_DATABASE[(currentIndex - 1 + DEX_DATABASE.length) % DEX_DATABASE.length];
+    const next = DEX_DATABASE[(currentIndex + 1) % DEX_DATABASE.length];
+
+    const formattedId = `#${p.id.toString().padStart(3, '0')}`;
+    const prevFormattedId = `#${prev.id.toString().padStart(3, '0')}`;
+    const nextFormattedId = `#${next.id.toString().padStart(3, '0')}`;
+
+    // Left Screen Artwork & Labels
+    const imgEl = document.getElementById("dex-main-image");
+    imgEl.style.opacity = '0';
+    setTimeout(() => {
+      imgEl.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${p.id}.png`;
+      imgEl.style.opacity = '1';
+    }, 150);
+
+    document.getElementById("screen-id-tag").textContent = `ID: ${formattedId}`;
+    document.getElementById("screen-name-tag").textContent = p.name;
+    document.getElementById("dex-prev-label").textContent = `${prevFormattedId} ${prev.name}`;
+    document.getElementById("dex-next-label").textContent = `${nextFormattedId} ${next.name}`;
+
+    // Right Screen Detail Readouts
+    document.getElementById("data-screen-dex-num").textContent = formattedId;
+    document.getElementById("data-screen-name").textContent = p.name;
+    document.getElementById("data-species").textContent = p.species;
+    document.getElementById("data-height").textContent = p.height;
+    document.getElementById("data-weight").textContent = p.weight;
+    document.getElementById("data-flavor").textContent = `"${p.flavor}"`;
+
+    renderTypeBadges(p.type);
+
+    // Stats
+    renderStatBar("stat-bar-hp", p.hp);
+    renderStatBar("stat-bar-atk", p.atk);
+    renderStatBar("stat-bar-def", p.def);
+    renderStatBar("stat-bar-spd", p.spd);
+
+    document.getElementById("stat-val-hp").textContent = p.hp;
+    document.getElementById("stat-val-atk").textContent = p.atk;
+    document.getElementById("stat-val-def").textContent = p.def;
+    document.getElementById("stat-val-spd").textContent = p.spd;
+
+    // Flash Cyclops Light & Audio Simulation
+    const cyclops = document.getElementById("main-cyclops-sensor");
+    cyclops.classList.add("scale-105");
+    setTimeout(() => cyclops.classList.remove("scale-105"), 200);
+
+    // Highlight Roster Item
+    document.querySelectorAll(".dex-roster-row").forEach(el => {
+      if (parseInt(el.dataset.id) === p.id) {
+        el.classList.add("bg-surface-bright", "border-tertiary");
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        el.classList.remove("bg-surface-bright", "border-tertiary");
+      }
+    });
+  }
+
+  // Build the complete 151 scrollable catalog
+  function buildRosterList(filter = "ALL") {
+    const listContainer = document.getElementById("dex-roster-list");
+    listContainer.innerHTML = "";
+
+    const filtered = DEX_DATABASE.filter(p => {
+      if (filter === "ALL") return true;
+      return p.type.includes(filter);
+    });
+
+    document.getElementById("roster-count-tag").textContent = `${filtered.length} ESPECÍMENES`;
+
+    filtered.forEach(p => {
+      const item = document.createElement("div");
+      item.dataset.id = p.id;
+      item.className = `dex-roster-row flex items-center justify-between p-1.5 rounded cursor-pointer transition-all bg-surface-container hover:bg-surface-container-high border border-transparent ${p.id === DEX_DATABASE[currentIndex].id ? 'bg-surface-bright border-tertiary' : ''}`;
+      
+      const padId = `#${p.id.toString().padStart(3, '0')}`;
+      item.innerHTML = `
+        <div class="flex items-center gap-2">
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png" alt="${p.name}" class="w-7 h-7 object-contain bg-surface-container-low rounded-xs">
+          <span class="font-label-sm text-label-sm text-secondary font-bold">${padId}</span>
+          <span class="font-label-md text-label-md text-on-surface uppercase font-bold truncate max-w-[90px] sm:max-w-[120px]">${p.name}</span>
+        </div>
+        <span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant uppercase">${p.type[0]}</span>
+      `;
+
+      item.addEventListener("click", () => {
+        const foundIdx = DEX_DATABASE.findIndex(poke => poke.id === p.id);
+        if (foundIdx !== -1) displayPokemon(foundIdx);
+      });
+
+      listContainer.appendChild(item);
+    });
+  }
+
+  // Populate dynamic dropdown autocomplete
+  const searchInput = document.getElementById("dex-search-input");
+  const searchResults = document.getElementById("dex-search-results");
+
+  function filterSearchResults(query) {
+    if (!query) {
+      searchResults.classList.add("hidden");
+      searchResults.innerHTML = "";
+      return;
+    }
+    const clean = query.trim().toUpperCase();
+    const matches = DEX_DATABASE.filter(p => 
+      p.name.includes(clean) || 
+      p.id.toString().includes(clean) || 
+      `#${p.id.toString().padStart(3, '0')}`.includes(clean)
+    ).slice(0, 8);
+
+    if (matches.length === 0) {
+      searchResults.innerHTML = `<div class="p-3 text-on-surface-variant font-label-sm text-label-sm uppercase">NO SE ENCONTRARON REGISTROS</div>`;
+      searchResults.classList.remove("hidden");
+      return;
+    }
+
+    searchResults.innerHTML = "";
+    matches.forEach(p => {
+      const opt = document.createElement("div");
+      opt.className = "px-3 py-2 hover:bg-primary-container hover:text-on-primary-container cursor-pointer flex items-center justify-between font-label-md text-label-md border-b border-outline-variant/10";
+      opt.innerHTML = `
+        <div class="flex items-center gap-2">
+          <span class="text-secondary font-bold">#${p.id.toString().padStart(3, '0')}</span>
+          <span class="font-bold text-on-surface uppercase">${p.name}</span>
+        </div>
+        <span class="font-label-sm text-label-sm text-on-surface-variant">${p.type.join('/')}</span>
+      `;
+      opt.addEventListener("click", () => {
+        const targetIdx = DEX_DATABASE.findIndex(poke => poke.id === p.id);
+        if (targetIdx !== -1) displayPokemon(targetIdx);
+        searchInput.value = "";
+        searchResults.classList.add("hidden");
+      });
+      searchResults.appendChild(opt);
+    });
+    searchResults.classList.remove("hidden");
+  }
+
+  searchInput.addEventListener("input", (e) => filterSearchResults(e.target.value));
+
+  document.getElementById("dex-clear-search").addEventListener("click", () => {
+    searchInput.value = "";
+    searchResults.classList.add("hidden");
+    displayPokemon(0);
+  });
+
+  // Physical Navigation Buttons
+  document.getElementById("dex-prev-btn").addEventListener("click", () => displayPokemon(currentIndex - 1));
+  document.getElementById("dex-next-btn").addEventListener("click", () => displayPokemon(currentIndex + 1));
+  document.getElementById("dpad-left").addEventListener("click", () => displayPokemon(currentIndex - 1));
+  document.getElementById("dpad-right").addEventListener("click", () => displayPokemon(currentIndex + 1));
+  document.getElementById("dpad-up").addEventListener("click", () => displayPokemon(currentIndex - 10));
+  document.getElementById("dpad-down").addEventListener("click", () => displayPokemon(currentIndex + 10));
+
+  // 10-Key Numerical Input Execution
+  document.querySelectorAll(".dex-num-key").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const num = btn.dataset.num;
+      if (numericBuffer.length < 3) {
+        numericBuffer += num;
+      }
+      searchInput.value = numericBuffer;
+      filterSearchResults(numericBuffer);
+    });
+  });
+
+  document.getElementById("key-btn-clear").addEventListener("click", () => {
+    numericBuffer = "";
+    searchInput.value = "";
+    searchResults.classList.add("hidden");
+  });
+
+  document.getElementById("key-btn-enter").addEventListener("click", () => {
+    if (numericBuffer.length > 0) {
+      const targetId = parseInt(numericBuffer);
+      const foundIdx = DEX_DATABASE.findIndex(p => p.id === targetId);
+      if (foundIdx !== -1) displayPokemon(foundIdx);
+      numericBuffer = "";
+      searchInput.value = "";
+      searchResults.classList.add("hidden");
+    }
+  });
+
+  // Category filter listeners
+  document.querySelectorAll(".type-filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".type-filter-btn").forEach(b => {
+        b.classList.remove("bg-tertiary-container", "text-on-tertiary", "font-bold");
+        b.classList.add("bg-surface-container");
+      });
+      btn.classList.add("bg-tertiary-container", "text-on-tertiary", "font-bold");
+      buildRosterList(btn.dataset.typeFilter);
+    });
+  });
+
+  // Voice narration speech synthesis integration
+  const voiceBtn = document.getElementById("dex-voice-btn");
+  voiceBtn.addEventListener("click", () => {
+    const p = DEX_DATABASE[currentIndex];
+    const textToSpeak = `${p.name}. Número ${p.id}. ${p.species}. ${p.flavor}`;
+    
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.lang = 'es-ES';
+      utterance.rate = 1.05;
+      utterance.pitch = 0.9;
+      
+      const pulse = document.getElementById("dex-voice-pulse");
+      utterance.onstart = () => {
+        pulse.classList.add("bg-primary-container", "scale-125");
+      };
+      utterance.onend = () => {
+        pulse.classList.remove("bg-primary-container", "scale-125");
+      };
+      window.speechSynthesis.speak(utterance);
+    } else {
+      alert(`[KANTO VOX SYSTEM]: ${textToSpeak}`);
+    }
+  });
+
+  // Toggle cry audio animation trigger
+  document.getElementById("dex-info-toggle").addEventListener("click", () => {
+    const curP = DEX_DATABASE[currentIndex];
+    displayPokemon((currentIndex + 5) % DEX_DATABASE.length);
+  });
+
+  // Init
+  buildRosterList();
+  displayPokemon(currentIndex);
+
+})();
+</script></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant/20 py-space-sm z-40"><div class="w-full px-margin flex flex-wrap items-center justify-between gap-space-sm font-label-md text-label-md text-on-surface-variant"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-tertiary inline-block animate-ping"></span><span class="text-tertiary uppercase font-label-sm text-label-sm tracking-wider">DEX VOICE: ACTIVE</span></div><span class="text-outline-variant">|</span><span class="font-body-sm text-body-sm text-on-surface">REGISTERED: 151 / 151 KANTO INDEX</span></div><div class="flex items-center gap-space-lg"><span class="font-label-sm text-label-sm tracking-widest text-on-surface-variant/80 uppercase">SILPH CO. &amp; PROF. OAK LABS</span><span class="font-label-sm text-label-sm text-tertiary uppercase">SYS VER 1.0.4-JP</span></div></div></footer></body></html>
