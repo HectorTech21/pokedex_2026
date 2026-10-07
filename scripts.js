@@ -41,6 +41,15 @@ window.addEventListener("load", function(){
     let crucetaIzquierda = document.getElementById("crucetaIzquierda");
     let crucetaDerecha = document.getElementById("crucetaDerecha");
 
+    let formBuscar = document.getElementById("formBuscar");
+    let inputBuscar = document.getElementById("inputBuscar");
+    let listaNombres = document.getElementById("listaNombres");
+    let teclas = document.querySelectorAll(".tecla");
+    let teclaBorrar = document.getElementById("teclaBorrar");
+    let teclaBuscar = document.getElementById("teclaBuscar");
+
+    let catalogoLista = document.getElementById("catalogoLista");
+    let catalogoContador = document.getElementById("catalogoContador");
     let pieTotal = document.getElementById("pieTotal");
 
 
@@ -137,6 +146,18 @@ window.addEventListener("load", function(){
         textoSiguiente.textContent = formatearNumero(siguiente) + " " + listaPokemons[siguiente - 1].name;
     }
 
+    let marcarEnCatalogo = () => {
+        let filas = catalogoLista.querySelectorAll(".catalogo-fila");
+
+        for (let i = 0; i < filas.length; i++) {
+            filas[i].classList.remove("activo");
+        }
+
+        let filaActual = filas[pokemonActual - 1];
+        filaActual.classList.add("activo");
+        catalogoLista.scrollTop = filaActual.offsetTop - catalogoLista.clientHeight / 2;
+    }
+
 
     let traducirTipos = async (types) => {
         let nombresTipos = [];
@@ -165,12 +186,71 @@ window.addEventListener("load", function(){
         pintarTipos(pokemonData.types, nombresTipos);
         pintarEstadisticas(pokemonData.stats);
         pintarVecinos();
+        marcarEnCatalogo();
 
         indicadores.classList.remove("cargando");
     }
 
     let moverse = (cantidad) => {
         mostrarPokemon(ajustarNumero(pokemonActual + cantidad));
+    }
+
+
+    let crearFila = async (nombre, numero) => {
+        let fila = document.createElement("li");
+        fila.dataset.nombre = nombre;
+        fila.innerHTML = '<button type="button" class="catalogo-fila">'
+            + '<img class="catalogo-imagen" alt="">'
+            + '<span class="catalogo-numero">' + formatearNumero(numero) + '</span>'
+            + '<span class="catalogo-nombre">' + nombre + '</span>'
+            + '<span class="catalogo-tipo"></span>'
+            + '</button>';
+
+        fila.addEventListener("click", function(){
+            mostrarPokemon(numero);
+        });
+        catalogoLista.appendChild(fila);
+
+        let pokemonData = await pokeApi.getPokemonById(numero);
+        fila.querySelector(".catalogo-imagen").src = pokemonData.sprites.front_default;
+        fila.querySelector(".catalogo-tipo").textContent = pokemonData.types[0].type.name;
+    }
+
+    let crearOpcion = (nombre) => {
+        let opcion = document.createElement("option");
+        opcion.value = nombre;
+        listaNombres.appendChild(opcion);
+    }
+
+    let cargarCatalogo = async () => {
+        let pokemonData = await pokeApi.getAllPokemons();
+        listaPokemons = pokemonData.results;
+
+        catalogoContador.textContent = listaPokemons.length + " especímenes";
+        pieTotal.textContent = listaPokemons.length;
+
+        for (let i = 0; i < listaPokemons.length; i++) {
+            crearFila(listaPokemons[i].name, i + 1);
+            crearOpcion(listaPokemons[i].name);
+        }
+    }
+
+
+    let buscarNumero = (texto) => {
+        texto = texto.trim().toLowerCase();
+        texto = texto.replace("#", "");
+
+        let numero = Number(texto);
+        if (numero >= 1 && numero <= listaPokemons.length) {
+            return numero;
+        }
+
+        for (let i = 0; i < listaPokemons.length; i++) {
+            if (listaPokemons[i].name === texto) {
+                return i + 1;
+            }
+        }
+        return 0;
     }
 
 
@@ -199,11 +279,52 @@ window.addEventListener("load", function(){
     });
 
 
-    let iniciar = async () => {
-        let pokemonData = await pokeApi.getAllPokemons();
-        listaPokemons = pokemonData.results;
-        pieTotal.textContent = listaPokemons.length;
+    formBuscar.addEventListener("submit", function($e){
+        $e.preventDefault();
 
+        let formData = new FormData(this);
+        let pokemonNumber = buscarNumero(formData.get("pokemonSearch"));
+
+        if (pokemonNumber === 0) {
+            inputBuscar.classList.add("is-invalid");
+            return;
+        }
+
+        inputBuscar.classList.remove("is-invalid");
+        inputBuscar.value = "";
+        mostrarPokemon(pokemonNumber);
+    });
+
+    formBuscar.addEventListener("reset", function(){
+        inputBuscar.classList.remove("is-invalid");
+        mostrarPokemon(1);
+    });
+
+    inputBuscar.addEventListener("input", function(){
+        inputBuscar.classList.remove("is-invalid");
+    });
+
+    for (let i = 0; i < teclas.length; i++) {
+        teclas[i].addEventListener("click", function(){
+            inputBuscar.classList.remove("is-invalid");
+            if (inputBuscar.value.length < 3) {
+                inputBuscar.value = inputBuscar.value + this.dataset.numero;
+            }
+        });
+    }
+
+    teclaBorrar.addEventListener("click", function(){
+        inputBuscar.classList.remove("is-invalid");
+        inputBuscar.value = "";
+    });
+
+    teclaBuscar.addEventListener("click", function(){
+        formBuscar.requestSubmit();
+    });
+
+
+    let iniciar = async () => {
+        await cargarCatalogo();
         mostrarPokemon(1);
     }
 
