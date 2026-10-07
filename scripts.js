@@ -5,27 +5,208 @@ import * as bootstrap from "./node_modules/bootstrap/dist/js/bootstrap.min.js";
 
 
 window.addEventListener("load", function(){
-    
-    /*QuerySelectorAll devuelve TODOS los elementos que cumplan el selector*/
-    let inputName = document.querySelectorAll("#pokemon-name");
 
-    let loadBar = document.getElementById("Load-bar");
+    let pokemonActual = 1;
+    let listaPokemons = [];
 
-    /*Retorna SOLO el primer elemento que cumpla con tener el id ya que un id debe ser UNICO en el DOM*/
-    let form1 = document.getElementById("form1");
+    let indicadores = document.getElementById("indicadores");
+
+    let pantallaNumero = document.getElementById("pantallaNumero");
+    let pantallaNombre = document.getElementById("pantallaNombre");
+    let imagenPokemon = document.getElementById("imagenPokemon");
+
+    let datosNumero = document.getElementById("datosNumero");
+    let datosNombre = document.getElementById("datosNombre");
+    let datosTipos = document.getElementById("datosTipos");
+    let datosEspecie = document.getElementById("datosEspecie");
+    let datosAltura = document.getElementById("datosAltura");
+    let datosPeso = document.getElementById("datosPeso");
+    let datosDescripcion = document.getElementById("datosDescripcion");
+
+    let barraVida = document.getElementById("barraVida");
+    let barraAtaque = document.getElementById("barraAtaque");
+    let barraDefensa = document.getElementById("barraDefensa");
+    let barraVelocidad = document.getElementById("barraVelocidad");
+    let valorVida = document.getElementById("valorVida");
+    let valorAtaque = document.getElementById("valorAtaque");
+    let valorDefensa = document.getElementById("valorDefensa");
+    let valorVelocidad = document.getElementById("valorVelocidad");
+
+    let botonAnterior = document.getElementById("botonAnterior");
+    let botonSiguiente = document.getElementById("botonSiguiente");
+    let textoAnterior = document.getElementById("textoAnterior");
+    let textoSiguiente = document.getElementById("textoSiguiente");
+    let crucetaArriba = document.getElementById("crucetaArriba");
+    let crucetaAbajo = document.getElementById("crucetaAbajo");
+    let crucetaIzquierda = document.getElementById("crucetaIzquierda");
+    let crucetaDerecha = document.getElementById("crucetaDerecha");
+
+    let pieTotal = document.getElementById("pieTotal");
 
 
-    form1.addEventListener("submit", async function($e){
-        $e.preventDefault();
+    let formatearNumero = (numero) => {
+        return "#" + String(numero).padStart(3, "0");
+    }
 
-        let formData = new FormData(this);
-        let pokemonNumber = formData.get("pokedex-number");
-        
-        let pokemonData = await pokeApi.getPokemonById(pokemonNumber);
+    let ajustarNumero = (numero) => {
+        if (numero < 1) {
+            return numero + listaPokemons.length;
+        }
+        if (numero > listaPokemons.length) {
+            return numero - listaPokemons.length;
+        }
+        return numero;
+    }
 
-        inputName[0].value=pokemonData.name;
-    
+    let textoEnEspanol = (lista, campo) => {
+        for (let i = 0; i < lista.length; i++) {
+            if (lista[i].language.name === "es") {
+                return lista[i][campo];
+            }
+        }
+        return "---";
+    }
+
+    let limpiarTexto = (texto) => {
+        texto = texto.replaceAll("\n", " ");
+        texto = texto.replaceAll("\f", " ");
+        return texto;
+    }
+
+
+    let pintarPantalla = (pokemonData) => {
+        pantallaNumero.textContent = "ID: " + formatearNumero(pokemonData.id);
+        pantallaNombre.textContent = pokemonData.name;
+        imagenPokemon.src = pokemonData.sprites.other["official-artwork"].front_default;
+        imagenPokemon.alt = pokemonData.name;
+    }
+
+    let pintarDatos = (pokemonData, speciesData) => {
+        datosNumero.textContent = formatearNumero(pokemonData.id);
+        datosNombre.textContent = pokemonData.name;
+        datosEspecie.textContent = textoEnEspanol(speciesData.genera, "genus");
+        datosAltura.textContent = (pokemonData.height / 10).toFixed(1) + " m";
+        datosPeso.textContent = (pokemonData.weight / 10).toFixed(1) + " kg";
+
+        let descripcion = textoEnEspanol(speciesData.flavor_text_entries, "flavor_text");
+        datosDescripcion.textContent = '"' + limpiarTexto(descripcion) + '"';
+    }
+
+    let pintarTipos = (types, nombresTipos) => {
+        datosTipos.innerHTML = "";
+
+        for (let i = 0; i < types.length; i++) {
+            let etiqueta = document.createElement("span");
+            etiqueta.classList.add("tipo", "tipo-" + types[i].type.name);
+            etiqueta.textContent = nombresTipos[i];
+            datosTipos.appendChild(etiqueta);
+        }
+    }
+
+    let pintarBarra = (barra, valor) => {
+        barra.innerHTML = "";
+        let segmentosLlenos = Math.round(valor / 150 * 12);
+
+        for (let i = 0; i < 12; i++) {
+            let segmento = document.createElement("span");
+            segmento.classList.add("segmento");
+            if (i < segmentosLlenos) {
+                segmento.classList.add("lleno");
+            }
+            barra.appendChild(segmento);
+        }
+    }
+
+    let pintarEstadisticas = (stats) => {
+        pintarBarra(barraVida, stats[0].base_stat);
+        pintarBarra(barraAtaque, stats[1].base_stat);
+        pintarBarra(barraDefensa, stats[2].base_stat);
+        pintarBarra(barraVelocidad, stats[5].base_stat);
+
+        valorVida.textContent = stats[0].base_stat;
+        valorAtaque.textContent = stats[1].base_stat;
+        valorDefensa.textContent = stats[2].base_stat;
+        valorVelocidad.textContent = stats[5].base_stat;
+    }
+
+    let pintarVecinos = () => {
+        let anterior = ajustarNumero(pokemonActual - 1);
+        let siguiente = ajustarNumero(pokemonActual + 1);
+
+        textoAnterior.textContent = formatearNumero(anterior) + " " + listaPokemons[anterior - 1].name;
+        textoSiguiente.textContent = formatearNumero(siguiente) + " " + listaPokemons[siguiente - 1].name;
+    }
+
+
+    let traducirTipos = async (types) => {
+        let nombresTipos = [];
+
+        for (let i = 0; i < types.length; i++) {
+            let tipoData = await pokeApi.getPokemonType(types[i].type.name);
+            nombresTipos.push(textoEnEspanol(tipoData.names, "name"));
+        }
+        return nombresTipos;
+    }
+
+    let mostrarPokemon = async (id) => {
+        pokemonActual = id;
+        indicadores.classList.add("cargando");
+
+        let pokemonData = await pokeApi.getPokemonById(id);
+        let speciesData = await pokeApi.getPokemonSpecies(id);
+        let nombresTipos = await traducirTipos(pokemonData.types);
+
+        if (id !== pokemonActual) {
+            return;
+        }
+
+        pintarPantalla(pokemonData);
+        pintarDatos(pokemonData, speciesData);
+        pintarTipos(pokemonData.types, nombresTipos);
+        pintarEstadisticas(pokemonData.stats);
+        pintarVecinos();
+
+        indicadores.classList.remove("cargando");
+    }
+
+    let moverse = (cantidad) => {
+        mostrarPokemon(ajustarNumero(pokemonActual + cantidad));
+    }
+
+
+    botonAnterior.addEventListener("click", function(){
+        moverse(-1);
     });
 
-   
+    botonSiguiente.addEventListener("click", function(){
+        moverse(1);
+    });
+
+    crucetaIzquierda.addEventListener("click", function(){
+        moverse(-1);
+    });
+
+    crucetaDerecha.addEventListener("click", function(){
+        moverse(1);
+    });
+
+    crucetaArriba.addEventListener("click", function(){
+        moverse(-10);
+    });
+
+    crucetaAbajo.addEventListener("click", function(){
+        moverse(10);
+    });
+
+
+    let iniciar = async () => {
+        let pokemonData = await pokeApi.getAllPokemons();
+        listaPokemons = pokemonData.results;
+        pieTotal.textContent = listaPokemons.length;
+
+        mostrarPokemon(1);
+    }
+
+    iniciar();
+
 });
