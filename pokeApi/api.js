@@ -1,5 +1,5 @@
 let getAllPokemons = async () => {
-    let pokemonData = await fetch("https://pokeapi.co/api/v2/pokemon");
+    let pokemonData = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
 
     pokemonData = await pokemonData.json();
 
@@ -25,12 +25,20 @@ let getPokemonsAbility = async (abilityName) => {
     return pokemonData;
 };
 
-let getPokemonType = async (abilityName) => {
-    let pokemonData = await fetch ("https://pokeapi.co/api/v2/type/" + abilityName);
+let getPokemonType = async (typeName) => {
+    let pokemonData = await fetch ("https://pokeapi.co/api/v2/type/" + typeName);
 
     pokemonData = await pokemonData.json();
 
     return pokemonData;
 };
 
-export {getAllPokemons, getPokemonById, getPokemonsAbility, getPokemonType}
+let getPokemonSpecies = async (id) => {
+    let pokemonData = await fetch("https://pokeapi.co/api/v2/pokemon-species/" + id);
+
+    pokemonData = await pokemonData.json();
+
+    return pokemonData;
+}
+
+export {getAllPokemons, getPokemonById, getPokemonsAbility, getPokemonType, getPokemonSpecies}
