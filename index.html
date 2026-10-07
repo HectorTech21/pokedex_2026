@@ -1,80 +1,316 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pokédex Kanto</title>
     <link href="./styles.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
+    <header class="cabecera">
         <div class="container-fluid">
-            <div class="row bg-primary">
-                <div class="col-12 col-md-2 logo-container d-flex justify-content-center">
-                    <img src="img/logo.png" class="img-fluid w-50">
-                    <span class="my-auto">POKEDEX</span>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+            <div class="row bg-primary align-items-center">
+                <div class="col-12 col-lg-3 logo-container d-flex align-items-center">
+                    <img src="img/logo.png" class="logo" alt="Sensor y luces de la Pokédex">
+                    <div class="logo-texto">
+                        <span class="logo-titulo">POKÉDEX</span>
+                        <span class="logo-modelo">MODEL HANDY909</span>
+                    </div>
+                    <button class="navbar-toggler boton-menu d-lg-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menú">
+                        <i class="bi bi-list"></i>
                     </button>
                 </div>
-                <div class="col-12 col-md-8 navbar-container">
+                <div class="col-12 col-lg-6 navbar-container">
                     <nav class="navbar navbar-expand-lg">
-                        <div class="container-fluid">
-                            
-                            <div class="collapse navbar-collapse" id="navbarNav">
-                                <ul class="navbar-nav main-menu">
-                                    <li class="nav-item">
-                                        <a class="nav-link" aria-current="page" href="#">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Features</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Pricing</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">4</a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav main-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="#pokedex">Kanto Dex</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#datos">Datos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#teclado">Teclado</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#catalogo">Catálogo</a>
+                                </li>
+                            </ul>
                         </div>
                     </nav>
                 </div>
-                <div class="col-12 col-md-2">
-
+                <div class="col-lg-3 d-none d-lg-flex justify-content-end align-items-center gap-3">
+                    <span class="chip-cabecera"><i class="bi bi-search"></i> ID / NAME #001-151</span>
+                    <span class="chip-cabecera chip-voz" aria-hidden="true">
+                        <span class="onda-voz"></span>
+                        <span class="onda-voz"></span>
+                        <span class="onda-voz"></span>
+                        <span class="onda-voz"></span>
+                        VOX READY
+                    </span>
+                    <span class="avatar" aria-hidden="true"><i class="bi bi-person"></i></span>
                 </div>
-                 
             </div>
         </div>
     </header>
-    <main>
-        <div class="container-fluid">
-         
-                <div class="row p-3">
-                    <div class="col-12">
-                        <form class="row">
-                            <div class="col-4">
-                                <div class="input-group form-search-input-container">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-search"></i>
-                                    </span>
-                                    <input type="text" class="form-control" placeholder="Pokemon" name="pokemonSearch">
+    <main class="container-fluid contenido">
+
+        <section class="barra-herramientas" aria-label="Búsqueda y filtros">
+            <div class="row align-items-center g-3">
+                <div class="col-12 col-xl-5">
+                    <form id="formBuscar" class="d-flex align-items-start gap-2" autocomplete="off">
+                        <div class="input-group form-search-input-container has-validation">
+                            <button type="submit" class="input-group-text" aria-label="Buscar">
+                                <i class="bi bi-search"></i>
+                            </button>
+                            <input type="text" class="form-control" placeholder="Buscar Pokémon (nº o nombre)..." name="pokemonSearch" id="inputBuscar" list="listaNombres" aria-label="Número o nombre del Pokémon">
+                            <div class="invalid-feedback">No hay ningún Pokémon de Kanto con ese número o nombre.</div>
+                        </div>
+                        <datalist id="listaNombres"></datalist>
+                        <button type="reset" class="boton-oscuro">Reset</button>
+                    </form>
+                </div>
+                <div class="col-12 col-md-8 col-xl-5">
+                    <div class="filtros d-flex align-items-center gap-2">
+                        <span class="etiqueta d-none d-sm-inline">Filtro:</span>
+                        <button type="button" class="filtro activo" data-tipo="todos">Todos</button>
+                        <button type="button" class="filtro filtro-planta" data-tipo="grass">Planta</button>
+                        <button type="button" class="filtro filtro-fuego" data-tipo="fire">Fuego</button>
+                        <button type="button" class="filtro filtro-agua" data-tipo="water">Agua</button>
+                        <button type="button" class="filtro filtro-electrico" data-tipo="electric">Eléc</button>
+                        <button type="button" class="filtro filtro-psiquico" data-tipo="psychic">Psi</button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-xl-2 d-flex justify-content-md-end">
+                    <button type="button" id="botonVoz" class="boton-voz">
+                        <span class="punto-voz"></span>
+                        Voz de Dexter
+                        <i class="bi bi-volume-up"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="carcasa" id="pokedex" aria-label="Pokédex">
+            <div class="carcasa-superior d-flex justify-content-between align-items-center">
+                <div id="indicadores" class="indicadores d-flex align-items-center gap-3">
+                    <div class="sensor">
+                        <div class="sensor-lente">
+                            <span class="sensor-brillo"></span>
+                        </div>
+                    </div>
+                    <div class="luces">
+                        <span class="luz luz-roja"></span>
+                        <span class="luz luz-amarilla"></span>
+                        <span class="luz luz-verde"></span>
+                    </div>
+                </div>
+                <div class="modelo text-end">
+                    <p class="modelo-nombre">KANTO OS • HANDY909</p>
+                    <p class="modelo-serie">REPLICATOR UNIT // DUAL-BUS ARCH</p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-12 col-lg-6">
+                    <section class="panel" aria-label="Pantalla">
+                        <div class="marco-pantalla">
+                            <div class="marco-superior d-flex justify-content-between align-items-center">
+                                <div class="d-flex gap-2">
+                                    <span class="punto-rojo"></span>
+                                    <span class="punto-rojo"></span>
                                 </div>
-                               
+                                <span class="marco-texto">SCAN-CAM MATRIX <span class="punto-verde"></span></span>
                             </div>
-                        </form>
-                    </div>
-                    <div class="col-12" style="background-color: yellow;">
-                        
-                    </div>
-                </div>  
-              
-        </div>
+
+                            <div class="pantalla">
+                                <div class="pantalla-estado d-flex justify-content-between align-items-center">
+                                    <p class="pantalla-id">
+                                        <span id="pantallaNumero">ID: #000</span>
+                                        •
+                                        <span id="pantallaNombre">---</span>
+                                    </p>
+                                    <span class="pantalla-modo">MODE: OPTIC-CAPTURE <i class="bi bi-broadcast"></i></span>
+                                </div>
+                                <figure class="pantalla-imagen">
+                                    <img id="imagenPokemon" src="img/logo.png" alt="Pokémon seleccionado">
+                                </figure>
+                                <div class="pantalla-grito d-flex justify-content-between align-items-center">
+                                    <button type="button" id="botonGrito" class="boton-grito">
+                                        <i class="bi bi-soundwave"></i> Cry synth: <i class="bi bi-play-fill"></i>
+                                    </button>
+                                    <div id="ondasGrito" class="ondas" aria-hidden="true">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="marco-inferior d-flex justify-content-between align-items-center">
+                                <span class="microfono"></span>
+                                <div class="altavoz">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mt-1">
+                            <div class="col-6">
+                                <button type="button" id="botonAnterior" class="boton-navegar">
+                                    <i class="bi bi-arrow-left"></i>
+                                    <span id="textoAnterior">#000</span>
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" id="botonSiguiente" class="boton-navegar">
+                                    <span id="textoSiguiente">#000</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="consola d-flex justify-content-between align-items-center">
+                            <button type="button" id="botonAleatorio" class="boton-pildora">
+                                <i class="bi bi-shuffle"></i> Aleatorio
+                            </button>
+                            <div class="d-flex gap-2" aria-hidden="true">
+                                <span class="balancin balancin-rojo"></span>
+                                <span class="balancin balancin-negro"></span>
+                            </div>
+                            <div class="cruceta">
+                                <button type="button" id="crucetaArriba" class="cruceta-boton cruceta-arriba" aria-label="10 Pokémon atrás">
+                                    <i class="bi bi-caret-up-fill"></i>
+                                </button>
+                                <button type="button" id="crucetaIzquierda" class="cruceta-boton cruceta-izquierda" aria-label="Pokémon anterior">
+                                    <i class="bi bi-caret-left-fill"></i>
+                                </button>
+                                <span class="cruceta-centro"></span>
+                                <button type="button" id="crucetaDerecha" class="cruceta-boton cruceta-derecha" aria-label="Pokémon siguiente">
+                                    <i class="bi bi-caret-right-fill"></i>
+                                </button>
+                                <button type="button" id="crucetaAbajo" class="cruceta-boton cruceta-abajo" aria-label="10 Pokémon adelante">
+                                    <i class="bi bi-caret-down-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <section class="panel" aria-label="Información">
+                        <article class="datos" id="datos">
+                            <div class="datos-cabecera d-flex justify-content-between align-items-center gap-2">
+                                <h1 class="datos-titulo">
+                                    <span id="datosNumero" class="datos-numero">#000</span>
+                                    <span id="datosNombre">---</span>
+                                </h1>
+                                <div id="datosTipos" class="d-flex gap-2"></div>
+                            </div>
+
+                            <dl class="medidas row g-2">
+                                <div class="col-4">
+                                    <dt>Especie</dt>
+                                    <dd id="datosEspecie">---</dd>
+                                </div>
+                                <div class="col-4">
+                                    <dt>Altura</dt>
+                                    <dd id="datosAltura">---</dd>
+                                </div>
+                                <div class="col-4">
+                                    <dt>Peso</dt>
+                                    <dd id="datosPeso">---</dd>
+                                </div>
+                            </dl>
+
+                            <div class="descripcion">
+                                <p class="descripcion-titulo"><i class="bi bi-database"></i> Registro oficial Kanto:</p>
+                                <p id="datosDescripcion" class="descripcion-texto">---</p>
+                            </div>
+
+                            <ul class="estadisticas">
+                                <li class="estadistica">
+                                    <span class="estadistica-nombre">PS (HP)</span>
+                                    <span id="barraVida" class="barra"></span>
+                                    <span id="valorVida" class="estadistica-valor">0</span>
+                                </li>
+                                <li class="estadistica">
+                                    <span class="estadistica-nombre">Ataque</span>
+                                    <span id="barraAtaque" class="barra"></span>
+                                    <span id="valorAtaque" class="estadistica-valor">0</span>
+                                </li>
+                                <li class="estadistica">
+                                    <span class="estadistica-nombre">Defensa</span>
+                                    <span id="barraDefensa" class="barra"></span>
+                                    <span id="valorDefensa" class="estadistica-valor">0</span>
+                                </li>
+                                <li class="estadistica">
+                                    <span class="estadistica-nombre">Velocidad</span>
+                                    <span id="barraVelocidad" class="barra"></span>
+                                    <span id="valorVelocidad" class="estadistica-valor">0</span>
+                                </li>
+                            </ul>
+                        </article>
+
+                        <section class="teclado" id="teclado" aria-label="Teclado numérico">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h2 class="teclado-titulo">Matriz de acceso directo numérico</h2>
+                                <div class="d-flex gap-2">
+                                    <button type="button" id="teclaBorrar" class="tecla-redonda" aria-label="Borrar">C</button>
+                                    <button type="button" id="teclaBuscar" class="tecla-redonda" aria-label="Buscar">E</button>
+                                </div>
+                            </div>
+                            <div class="teclas">
+                                <button type="button" class="tecla" data-numero="1">1</button>
+                                <button type="button" class="tecla" data-numero="2">2</button>
+                                <button type="button" class="tecla" data-numero="3">3</button>
+                                <button type="button" class="tecla" data-numero="4">4</button>
+                                <button type="button" class="tecla" data-numero="5">5</button>
+                                <button type="button" class="tecla" data-numero="6">6</button>
+                                <button type="button" class="tecla" data-numero="7">7</button>
+                                <button type="button" class="tecla" data-numero="8">8</button>
+                                <button type="button" class="tecla" data-numero="9">9</button>
+                                <button type="button" class="tecla" data-numero="0">0</button>
+                            </div>
+                        </section>
+
+                        <section class="catalogo" id="catalogo" aria-label="Catálogo">
+                            <div class="catalogo-cabecera d-flex justify-content-between align-items-center">
+                                <h2 class="catalogo-titulo">Catálogo regional (#001 - #151)</h2>
+                                <span id="catalogoContador" class="catalogo-contador">0 especímenes</span>
+                            </div>
+                            <ul id="catalogoLista" class="catalogo-lista"></ul>
+                        </section>
+                    </section>
+                </div>
+            </div>
+        </section>
+
     </main>
-    <footer>
+    <footer class="pie">
+        <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <p class="pie-estado">
+                <span class="punto-verde"></span>
+                <span class="pie-voz">DEX VOICE: ACTIVE</span>
+                <span class="pie-separador">|</span>
+                REGISTERED: <span id="pieTotal">0</span> / 151 KANTO INDEX
+            </p>
+            <p class="pie-marca">
+                SILPH CO. &amp; PROF. OAK LABS
+                <span class="pie-version">SYS VER 1.0.4-JP</span>
+            </p>
+        </div>
         <script type="module" src="./scripts.js"></script>
     </footer>
 </body>
