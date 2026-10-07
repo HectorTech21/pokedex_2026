@@ -13,15 +13,12 @@ window.addEventListener("load", function(){
     let textoVoz = "";
 
     let indicadores = document.getElementById("indicadores");
-    let botonVoz = document.getElementById("botonVoz");
-    let botonesFiltro = document.querySelectorAll(".filtro");
-    let botonGrito = document.getElementById("botonGrito");
-    let ondasGrito = document.getElementById("ondasGrito");
-    let botonAleatorio = document.getElementById("botonAleatorio");
 
     let pantallaNumero = document.getElementById("pantallaNumero");
     let pantallaNombre = document.getElementById("pantallaNombre");
     let imagenPokemon = document.getElementById("imagenPokemon");
+    let botonGrito = document.getElementById("botonGrito");
+    let ondasGrito = document.getElementById("ondasGrito");
 
     let datosNumero = document.getElementById("datosNumero");
     let datosNombre = document.getElementById("datosNombre");
@@ -48,6 +45,7 @@ window.addEventListener("load", function(){
     let crucetaAbajo = document.getElementById("crucetaAbajo");
     let crucetaIzquierda = document.getElementById("crucetaIzquierda");
     let crucetaDerecha = document.getElementById("crucetaDerecha");
+    let botonAleatorio = document.getElementById("botonAleatorio");
 
     let formBuscar = document.getElementById("formBuscar");
     let inputBuscar = document.getElementById("inputBuscar");
@@ -55,6 +53,8 @@ window.addEventListener("load", function(){
     let teclas = document.querySelectorAll(".tecla");
     let teclaBorrar = document.getElementById("teclaBorrar");
     let teclaBuscar = document.getElementById("teclaBuscar");
+    let botonesFiltro = document.querySelectorAll(".filtro");
+    let botonVoz = document.getElementById("botonVoz");
 
     let catalogoLista = document.getElementById("catalogoLista");
     let catalogoContador = document.getElementById("catalogoContador");
@@ -96,6 +96,7 @@ window.addEventListener("load", function(){
         pantallaNombre.textContent = pokemonData.name;
         imagenPokemon.src = pokemonData.sprites.other["official-artwork"].front_default;
         imagenPokemon.alt = pokemonData.name;
+        urlGrito = pokemonData.cries.legacy;
     }
 
     let pintarDatos = (pokemonData, speciesData) => {
@@ -199,7 +200,6 @@ window.addEventListener("load", function(){
         pintarEstadisticas(pokemonData.stats);
         pintarVecinos();
         marcarEnCatalogo();
-        urlGrito = pokemonData.cries.legacy;
 
         indicadores.classList.remove("cargando");
     }
