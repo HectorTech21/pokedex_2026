@@ -8,8 +8,16 @@ window.addEventListener("load", function(){
 
     let pokemonActual = 1;
     let listaPokemons = [];
+    let filtroActual = "todos";
+    let urlGrito = "";
+    let textoVoz = "";
 
     let indicadores = document.getElementById("indicadores");
+    let botonVoz = document.getElementById("botonVoz");
+    let botonesFiltro = document.querySelectorAll(".filtro");
+    let botonGrito = document.getElementById("botonGrito");
+    let ondasGrito = document.getElementById("ondasGrito");
+    let botonAleatorio = document.getElementById("botonAleatorio");
 
     let pantallaNumero = document.getElementById("pantallaNumero");
     let pantallaNombre = document.getElementById("pantallaNombre");
@@ -91,14 +99,18 @@ window.addEventListener("load", function(){
     }
 
     let pintarDatos = (pokemonData, speciesData) => {
+        let especie = textoEnEspanol(speciesData.genera, "genus");
+        let descripcion = textoEnEspanol(speciesData.flavor_text_entries, "flavor_text");
+        descripcion = limpiarTexto(descripcion);
+
         datosNumero.textContent = formatearNumero(pokemonData.id);
         datosNombre.textContent = pokemonData.name;
-        datosEspecie.textContent = textoEnEspanol(speciesData.genera, "genus");
+        datosEspecie.textContent = especie;
         datosAltura.textContent = (pokemonData.height / 10).toFixed(1) + " m";
         datosPeso.textContent = (pokemonData.weight / 10).toFixed(1) + " kg";
+        datosDescripcion.textContent = '"' + descripcion + '"';
 
-        let descripcion = textoEnEspanol(speciesData.flavor_text_entries, "flavor_text");
-        datosDescripcion.textContent = '"' + limpiarTexto(descripcion) + '"';
+        textoVoz = pokemonData.name + ". " + especie + ". " + descripcion;
     }
 
     let pintarTipos = (types, nombresTipos) => {
@@ -187,6 +199,7 @@ window.addEventListener("load", function(){
         pintarEstadisticas(pokemonData.stats);
         pintarVecinos();
         marcarEnCatalogo();
+        urlGrito = pokemonData.cries.legacy;
 
         indicadores.classList.remove("cargando");
     }
@@ -251,6 +264,51 @@ window.addEventListener("load", function(){
             }
         }
         return 0;
+    }
+
+
+    let nombresDelTipo = async (tipo) => {
+        let nombres = [];
+        let tipoData = await pokeApi.getPokemonType(tipo);
+
+        for (let i = 0; i < tipoData.pokemon.length; i++) {
+            nombres.push(tipoData.pokemon[i].pokemon.name);
+        }
+        return nombres;
+    }
+
+    let filtrarCatalogo = async (tipo) => {
+        filtroActual = tipo;
+        let filas = catalogoLista.querySelectorAll("li");
+        let nombres = [];
+        let visibles = 0;
+
+        if (tipo !== "todos") {
+            nombres = await nombresDelTipo(tipo);
+        }
+
+        if (tipo !== filtroActual) {
+            return;
+        }
+
+        for (let i = 0; i < filas.length; i++) {
+            if (tipo === "todos" || nombres.includes(filas[i].dataset.nombre)) {
+                filas[i].classList.remove("d-none");
+                visibles++;
+            } else {
+                filas[i].classList.add("d-none");
+            }
+        }
+
+        catalogoContador.textContent = visibles + " especímenes";
+        catalogoLista.scrollTop = 0;
+    }
+
+    let marcarFiltro = (botonPulsado) => {
+        for (let i = 0; i < botonesFiltro.length; i++) {
+            botonesFiltro[i].classList.remove("activo");
+        }
+        botonPulsado.classList.add("activo");
     }
 
 
@@ -320,6 +378,49 @@ window.addEventListener("load", function(){
 
     teclaBuscar.addEventListener("click", function(){
         formBuscar.requestSubmit();
+    });
+
+
+    for (let i = 0; i < botonesFiltro.length; i++) {
+        botonesFiltro[i].addEventListener("click", function(){
+            marcarFiltro(this);
+            filtrarCatalogo(this.dataset.tipo);
+        });
+    }
+
+    botonAleatorio.addEventListener("click", function(){
+        let numero = Math.floor(Math.random() * listaPokemons.length) + 1;
+        mostrarPokemon(numero);
+    });
+
+    botonGrito.addEventListener("click", function(){
+        let grito = new Audio(urlGrito);
+
+        grito.addEventListener("playing", function(){
+            ondasGrito.classList.add("sonando");
+        });
+
+        grito.addEventListener("ended", function(){
+            ondasGrito.classList.remove("sonando");
+        });
+
+        grito.play();
+    });
+
+    botonVoz.addEventListener("click", function(){
+        let voz = new SpeechSynthesisUtterance(textoVoz);
+        voz.lang = "es-ES";
+
+        voz.addEventListener("start", function(){
+            botonVoz.classList.add("hablando");
+        });
+
+        voz.addEventListener("end", function(){
+            botonVoz.classList.remove("hablando");
+        });
+
+        speechSynthesis.cancel();
+        speechSynthesis.speak(voz);
     });
 
 
